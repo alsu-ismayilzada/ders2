@@ -1,10 +1,10 @@
 package org.example;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,7 +19,7 @@ public class Main {
     public static void main(String[] args) {
 
         Workbook wb = null;
-        File file = new File("autos.xls");
+        File file = new File("autos.xlsx");
 
         if(file.exists()){
             try(FileInputStream inputStream = new FileInputStream(file)){
@@ -28,7 +28,7 @@ public class Main {
                 System.out.println(e);
             }
         }else{
-            wb = new HSSFWorkbook();
+            wb = new XSSFWorkbook();
         }
 
         try {
@@ -57,7 +57,7 @@ public class Main {
             }
             addData(sheet);
 
-            try (OutputStream os = new FileOutputStream("autos.xls")) {
+            try (OutputStream os = new FileOutputStream("autos.xlsx")) {
                 wb.write(os);
             }
         } catch (IOException e) {
@@ -152,7 +152,7 @@ public class Main {
             if (currentPageStr != null) {
                 return Integer.parseInt(currentPageStr);
             }
-        } catch (IOException | NumberFormatException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return 0;
