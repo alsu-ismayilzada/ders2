@@ -68,7 +68,7 @@ public class Main {
 
         int currentPage = loadCurrentPage();
         for (int i = currentPage; i < currentPage + 5; i++) {
-            System.out.println("Page "+ i + " parsed");
+            System.out.println("Page "+ i + " is parsing");
             Document doc = Jsoup.connect("https://turbo.az/autos/?page=" + i).get();
             Elements adLinks = doc.select(".tz-container .products .products-i__link");
             for (Element adLink : adLinks) {
