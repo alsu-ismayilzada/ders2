@@ -11,13 +11,15 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.*;
+import java.util.Properties;
 
 import static org.example.PageManager.loadCurrentPage;
 import static org.example.PageManager.saveCurrentPageNumber;
 
 
 public class WorkbookHandler {
-
+    private static final String CURRENT_PAGE_FILE = "current_page.properties";
+    private static final String BASE_URL = "base_url";
     private Workbook wb;
     private String filename;
     public WorkbookHandler(String filename) {
@@ -71,10 +73,21 @@ public class WorkbookHandler {
     }
     private static void addData(Sheet sheet) throws IOException {
 
+        Properties prop = new Properties();
+        try {
+            prop.load(new FileInputStream(CURRENT_PAGE_FILE));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String baseUrl = prop.getProperty(BASE_URL);
         int currentPage = loadCurrentPage();
+
         for (int i = currentPage; i < currentPage + 5; i++) {
             System.out.println("Page "+ i + " is parsing");
-            Document doc = Jsoup.connect("https://turbo.az/autos/?page=" + i).get();
+            String url = baseUrl + i;
+            Document doc = Jsoup.connect(url + i).get();
             Elements adLinks = doc.select(".tz-container .products .products-i__link");
             for (Element adLink : adLinks) {
 
