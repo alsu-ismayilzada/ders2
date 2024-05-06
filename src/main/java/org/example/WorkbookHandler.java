@@ -96,13 +96,13 @@ public class WorkbookHandler {
 
                 String price = doc1.select(".product-price__i.product-price__i--bold").text();
 
-                Elements divs = doc1.select(".product-properties__column");
+                Elements propertiesColumns = doc1.select(".product-properties__column");
 
                 Row newRow = sheet.createRow(sheet.getLastRowNum() + 1);
                 newRow.createCell(0).setCellValue(price);
-                for (Element div : divs) {
+                for (Element propertiesColumn : propertiesColumns) {
 
-                    Elements elements = div.select(".product-properties__i ");
+                    Elements elements = propertiesColumn.select(".product-properties__i ");
                     for (Element element : elements) {
 
                         Element elementLabel = element.select("label").first();
